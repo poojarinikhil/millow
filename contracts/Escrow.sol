@@ -65,10 +65,6 @@ contract Escrow {
         approval[_nftID][msg.sender] = true;
     }
 
-    receive() external payable{}
-    function getBalance() public view returns (uint256){
-        return address(this).balance;
-    }
     function finalizeSale(uint256 _nftID) public{
         require(inspectionPassed[_nftID]);
         require(approval[_nftID][buyer[_nftID]]);
@@ -90,6 +86,10 @@ contract Escrow {
         }else{
             payable(seller).transfer(address(this).balance);
         }
+    }
+    receive() external payable{}
+    function getBalance() public view returns (uint256){
+        return address(this).balance;
     }
 
 }
